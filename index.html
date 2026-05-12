@@ -1,85 +1,88 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Peta SPBU Pertamina Manado</title>
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
     <style>
-        #map {
-            height: 650px;
-            width: 100%;
-            border-radius: 8px;
-        }
-
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f4;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f2f5;
         }
 
         h2 {
-            color: #333;
             text-align: center;
+            color: #d32f2f; /* Warna merah Pertamina */
+        }
+
+        #map {
+            height: 650px;
+            width: 100%;
+            border: 2px solid #ccc;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .leaflet-popup-content-wrapper {
+            border-radius: 8px;
         }
     </style>
 </head>
 
 <body>
 
-    <h2>Peta Persebaran SPBU Pertamina di Manado</h2>
-
+    <h2>Peta Sebaran SPBU Pertamina Manado</h2>
     <div id="map"></div>
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
     <script>
-        // Inisialisasi Peta (Koordinat Manado)
-        var map = L.map('map').setView([1.4748, 124.8421], 13);
+        // Inisialisasi peta berpusat di tengah kota Manado
+        var map = L.map('map').setView([1.4795, 124.8450], 13);
 
-        // Menambahkan Layer Peta OpenStreetMap
+        // Tile Layer menggunakan OpenStreetMap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap contributors'
+            attribution: '&copy; OpenStreetMap'
         }).addTo(map);
 
-        // Custom Icon untuk SPBU
+        // Icon Custom (Bisa diganti dengan file lokal assets/spbu.png Anda)
         var spbuIcon = L.icon({
-            iconUrl: 'https://cdn-icons-png.flaticon.com/512/3448/3448650.png', // Contoh icon publik jika file lokal tidak ada
-            iconSize: [40, 40],
-            iconAnchor: [20, 40],
-            popupAnchor: [0, -40]
+            iconUrl: 'https://cdn-icons-png.flaticon.com/512/3448/3448650.png',
+            iconSize: [35, 35],
+            iconAnchor: [17, 35],
+            popupAnchor: [0, -35]
         });
 
-        // DATA STATIS (Pengganti Database PHP)
-        // Anda bisa menambah atau mengubah koordinat di sini
-        var dataSPBU = [
-            {
-                nama: "SPBU COCO 71.951.03",
-                lat: 1.4855,
-                lng: 124.8385
-            },
-            {
-                nama: "SPBU Pertamina Tikala",
-                lat: 1.4741,
-                lng: 124.8450
-            },
-            {
-                nama: "SPBU Pertamina Malalayang",
-                lat: 1.4550,
-                lng: 124.8150
-            }
+        // Data Lokasi yang Anda berikan (Konversi ke Desimal)
+        var lokasiSPBU = [
+            { nama: "Pertamina Sario", lat: 1.463819, lng: 124.830167 },
+            { nama: "Pertamina Wanea", lat: 1.467153, lng: 124.840053 },
+            { nama: "Pertamina Malalayang", lat: 1.459653, lng: 124.798586 },
+            { nama: "SPBU Pertamina 1 Winangun", lat: 1.444742, lng: 124.840031 },
+            { nama: "SPBU Pertamina 2 Winangun", lat: 1.439992, lng: 124.843389 },
+            { nama: "Pertamina Teling", lat: 1.464236, lng: 124.850647 },
+            { nama: "Pertamina Megamall", lat: 1.483108, lng: 124.835400 },
+            { nama: "Pertamina Tikala", lat: 1.482906, lng: 124.846517 },
+            { nama: "Pertamina Paal 2", lat: 1.486969, lng: 124.859169 },
+            { nama: "Pertamina Dendengan", lat: 1.479467, lng: 124.861683 },
+            { nama: "Pertamina IT", lat: 1.485481, lng: 124.836281 },
+            { nama: "Pertamina Politeknik", lat: 1.500919, lng: 124.891275 },
+            { nama: "Pertamina Singkil", lat: 1.494000, lng: 124.860517 }
         ];
 
-        // Looping untuk menampilkan marker di peta
-        dataSPBU.forEach(function(spbu) {
-            L.marker([spbu.lat, spbu.lng], { icon: spbuIcon })
+        // Loop untuk memasukkan marker ke peta
+        lokasiSPBU.forEach(function(item) {
+            L.marker([item.lat, item.lng], { icon: spbuIcon })
                 .addTo(map)
-                .bindPopup("<b>" + spbu.nama + "</b><br>Kota Manado");
+                .bindPopup("<b>" + item.nama + "</b><br>Manado, Sulawesi Utara");
         });
     </script>
 
 </body>
-
 </html>
